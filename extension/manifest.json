@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "ViTools",
+  "version": "0.1.0",
+  "description": "YouTube için video, MP3, küçük resim, altyazı ve ekran görüntüsü araçları. Açık kaynak deneme sürümü.",
+  "permissions": ["storage", "downloads", "scripting"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "content_scripts": [{
+    "matches": ["https://www.youtube.com/*"],
+    "js": ["caption-observer.js"],
+    "world": "MAIN",
+    "run_at": "document_start"
+  }, {
+    "matches": ["https://www.youtube.com/*"],
+    "js": ["subtitles.js", "content.js"],
+    "run_at": "document_idle"
+  }],
+  "action": {"default_popup": "popup.html", "default_title": "ViTools"},
+  "web_accessible_resources": [{"resources": ["mux.js", "sabr.js", "audio.js", "vendor/lamejs.js", "vendor/mediabunny.mjs", "vendor/googlevideo.mjs"], "matches": ["https://www.youtube.com/*"]}]
+}
+

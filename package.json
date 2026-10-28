@@ -1,0 +1,10 @@
+{
+  "name": "vitools",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {"check": "node scripts/check.mjs", "test": "node scripts/test.mjs", "package": "node scripts/package.mjs", "dev": "node scripts/dev.mjs", "build:stream": "esbuild scripts/vendor-googlevideo-entry.mjs --bundle --format=esm --platform=browser --outfile=extension/vendor/googlevideo.mjs"},
+  "devDependencies": {"esbuild": "0.28.2", "googlevideo": "5.0.1", "@bufbuild/protobuf": "2.16.0"}
+}
+

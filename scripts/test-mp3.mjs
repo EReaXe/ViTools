@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import { encodeMp3, parseAudioTime } from '../extension/audio.js';
+import { Input, BlobSource, ALL_FORMATS } from '../extension/vendor/mediabunny.mjs';
+assert.equal(parseAudioTime('01:02:03'), 3723);
+assert.equal(parseAudioTime('00:00:01.250'), 1.25);
+assert.throws(() => parseAudioTime('00:99:00'));
+const rate = 44100, channels = 2, seconds = 2, count = rate * seconds;
+const wav = new ArrayBuffer(44 + count * channels * 2); const view = new DataView(wav);
+const text = (at, value) => [...value].forEach((c, i) => view.setUint8(at + i, c.charCodeAt(0)));
+text(0, 'RIFF'); view.setUint32(4, wav.byteLength - 8, true); text(8, 'WAVE'); text(12, 'fmt ');
+view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, channels, true);
+view.setUint32(24, rate, true); view.setUint32(28, rate * channels * 2, true); view.setUint16(32, channels * 2, true); view.setUint16(34, 16, true);
+text(36, 'data'); view.setUint32(40, count * channels * 2, true);
+for (let i = 0; i < count; i++) for (let c = 0; c < channels; c++) view.setInt16(44 + (i * channels + c) * 2, Math.round(Math.sin(2 * Math.PI * (c ? 880 : 440) * i / rate) * 10000), true);
+for (const bitrate of [128, 192, 256, 320]) {
+  let progress = 0;
+  const blob = await encodeMp3(new Blob([wav], { type: 'audio/wav' }), { start: 0.25, end: 1.25, bitrate, onProgress: value => { progress = value; } });
+  assert.equal(blob.type, 'audio/mpeg'); assert.equal(progress, 1);
+  const input = new Input({ source: new BlobSource(blob), formats: ALL_FORMATS });
+  const track = await input.getPrimaryAudioTrack(); assert.ok(track);
+  assert.equal(await track.getCodec(), 'mp3'); assert.equal(await track.getNumberOfChannels(), 2);
+  const duration = await track.computeDuration();
+  assert.ok(duration >= 1 && duration < 1.12, `Trim süresi: ${duration}`);
+  const actualBitrate = blob.size * 8 / duration / 1000;
+  assert.ok(Math.abs(actualBitrate - bitrate) < 3, `${bitrate}: ${actualBitrate}`);
+  input.dispose();
+}
+await assert.rejects(() => encodeMp3(new Blob([wav]), { start: 1, end: 0 }), /Bitiş/);
+await assert.rejects(() => encodeMp3(new Blob([wav]), { start: 0, end: 1, bitrate: 999 }), /bit hızı/);
+await assert.rejects(() => encodeMp3(new Blob([wav]), { start: 0, end: 1, isCurrent: () => false }), /durduruldu/);
+console.log('Gerçek MP3: 128/192/256/320 kbps, stereo, kırpılmış süre, ilerleme, zaman doğrulaması ve iptal testleri geçti.');
