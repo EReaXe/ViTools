@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
   "name": "ViTools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "YouTube için video, MP3, küçük resim, altyazı ve ekran görüntüsü araçları. Açık kaynak deneme sürümü.",
-  "permissions": ["storage", "downloads", "scripting"],
-  "host_permissions": ["https://www.youtube.com/*"],
+  "permissions": ["storage", "downloads", "scripting", "alarms"],
+  "host_permissions": ["https://www.youtube.com/*", "https://api.github.com/repos/EReaXe/ViTools/releases/latest"],
   "background": {"service_worker": "background.js", "type": "module"},
   "content_scripts": [{
     "matches": ["https://www.youtube.com/*"],

@@ -49,7 +49,7 @@ function archive(entries) {
 const extensionRoot = join(root, 'extension');
 const extensionEntries = files(extensionRoot).map(path => [relative(extensionRoot, path).replaceAll('\\', '/'), readFileSync(path)]);
 for (const document of ['LICENSE', 'PRIVACY.md', 'CHANGELOG.md']) extensionEntries.push([document, readFileSync(join(root, document))]);
-extensionEntries.push(['INSTALL.md', Buffer.from('# Kurulum\n\nZIP dosyasını bir klasöre çıkarın. Chrome’da chrome://extensions sayfasını açıp Geliştirici modunu etkinleştirin. Paketlenmemiş öğe yükle ile manifest.json dosyasının bulunduğu bu klasörü seçin. YouTube sayfasını yenileyin.\n\nSürüm 0.1.0 bir deneme sürümüdür. Kaynak kod paketi ayrıca sunulur. Mağaza yayını yapılmadı.\n')]);
+extensionEntries.push(['INSTALL.md', Buffer.from('# Kurulum\n\nZIP dosyasını bir klasöre çıkarın. Chrome’da chrome://extensions sayfasını açıp Geliştirici modunu etkinleştirin. Paketlenmemiş öğe yükle ile manifest.json dosyasının bulunduğu bu klasörü seçin. YouTube sayfasını yenileyin.\n\nBu paket bir deneme sürümüdür. Kaynak kod paketi ayrıca sunulur. Mağaza yayını yapılmadı.\n')]);
 const sourcePaths = [...files(extensionRoot), ...files(join(root, 'scripts')),
   ...['README.md', 'LICENSE', 'PRIVACY.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'PUBLISHING.md', 'package.json', '.gitignore'].map(name => join(root, name))];
 const sourceEntries = sourcePaths.map(path => [relative(root, path).replaceAll('\\', '/'), readFileSync(path)]);
@@ -61,3 +61,4 @@ for (const [suffix, entries] of [['chrome', extensionEntries], ['source', source
   console.log(`${basename(path)}: ${entries.length} dosya, ${(bytes.length / 1048576).toFixed(2)} MB`);
 }
 writeFileSync(join(output, 'SHA256SUMS.txt'), sums.join('\n') + '\n');
+

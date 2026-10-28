@@ -1,6 +1,14 @@
 # ViTools
 
-Chrome ve Chromium tabanlı tarayıcılar için MIT lisanslı Manifest V3 eklentisi. İlk deneme sürümü: 0.1.0.
+Chrome ve Chromium tabanlı tarayıcılar için MIT lisanslı Manifest V3 eklentisi. Güncel deneme sürümü: 0.1.1.
+
+Kurulum paketleri: https://github.com/EReaXe/ViTools/releases
+
+## Güncelleme
+
+Eklenti 12 saatte bir GitHub Releases son kararlı sürümünü kontrol eder. Yeni sürüm bulunduğunda simgede !, menüde indirme bağlantısı görünür. Şimdi kontrol et düğmesiyle elle kontrol yapılabilir. GitHub hesabı veya giriş gerekmez. ZIP otomatik yüklenmez: yeni paketi mevcut eklenti klasörüne çıkarın; chrome://extensions sayfasında ViTools için Yeniden yükle düğmesine basın ve YouTube'u yenileyin. Aynı klasörü kullanmak konum tercihinizin korunmasına yardımcı olur. Eklentiyi kaldırıp yeniden eklemeniz gerekmez. Yeni izinler varsa Chrome bunları onaylamanızı isteyebilir.
+
+Chrome, Windows/macOS üzerinde geliştirici modunda yüklenen eklentiler için kullanıcı müdahalesi olmadan GitHub ZIP'inden kurulum sağlamaz. Bu özellik otomatik sürüm kontrolüdür; sessiz kod güncellemesi değildir. Resmi açıklama: https://developer.chrome.com/docs/extensions/how-to/distribute
 
 ## Kurulum
 

@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { isNewerVersion, readRelease } from '../extension/update-core.js';
+assert.equal(isNewerVersion('v0.1.10', '0.1.9'), true);
+assert.equal(isNewerVersion('0.1.1', '0.1.1.0'), false);
+assert.equal(isNewerVersion('0.1.0', '0.1.1'), false);
+assert.throws(() => isNewerVersion('v0.2.0-beta', '0.1.1'));
+const fixture = { tag_name: 'v0.1.2', assets: [{ name: 'vitools-0.1.2-chrome.zip', size: 100, state: 'uploaded', browser_download_url: 'https://github.com/EReaXe/ViTools/releases/download/v0.1.2/vitools-0.1.2-chrome.zip' }] };
+assert.equal(readRelease(fixture, '0.1.1').available, true);
+assert.throws(() => readRelease({ ...fixture, prerelease: true }, '0.1.1'));
+assert.throws(() => readRelease({ ...fixture, assets: [] }, '0.1.1'));
+assert.throws(() => readRelease({ ...fixture, assets: [{ ...fixture.assets[0], browser_download_url: 'https://evil.example/file.zip' }] }, '0.1.1'));
+console.log('Güncelleme sürüm karşılaştırması, paket adı ve kaynak doğrulaması geçti.');

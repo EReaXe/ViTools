@@ -1,6 +1,8 @@
 import { decipherVideo } from './video-decipher.js';
 import { readAdaptiveVideo, fetchAdaptiveStreams } from './adaptive.js';
 import { VideoPlaybackAbrRequest } from './vendor/googlevideo.mjs';
+import { initUpdates } from './updates.js';
+initUpdates();
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (['list-adaptive', 'download-adaptive', 'download-audio'].includes(message.type)) {

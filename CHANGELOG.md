@@ -1,5 +1,12 @@
 # Sürüm notları
 
+## 0.1.1 — 28 Ekim 2026
+
+- GitHub Releases üzerinden 12 saatte bir otomatik sürüm kontrolü.
+- Eklenti simgesinde güncelleme işareti ve menüde yeni ZIP bağlantısı.
+- Elle sürüm kontrolü, ağ hatası/henüz release yok durumları ve paket kaynağı doğrulaması.
+- Geliştirici modundaki kurulumlar için aynı klasör üzerinden güncelleme yönergeleri. Sessiz otomatik kurulum yapılmaz.
+
 ## 0.1.0 — 28 Ekim 2026
 
 İlk deneme sürümü. Proje adı: ViTools.
